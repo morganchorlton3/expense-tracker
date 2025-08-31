@@ -1,16 +1,25 @@
-from contextlib import asynccontextmanager
-
-from fastapi import FastAPI
-from app.core.config import settings
 from app.api.v1 import expense
-from app.db.migrate import init_db
+from contextlib import asynccontextmanager
+from fastapi import FastAPI
+from sqlalchemy.orm import sessionmaker
+from sqlmodel import create_engine
+from app.db.base import Base
+from app.core.config import settings
 
 @asynccontextmanager
 async def lifespan(app: FastAPI):
-    # --- startup ---
-    init_db()
-    yield
-    # --- shutdown ---
+    engine = create_engine(settings.database_url, echo=settings.debug, pool_pre_ping=True, future=True)
+    SessionLocal = sessionmaker(bind=engine, autocommit=False, autoflush=False, expire_on_commit=False, future=True)
+
+    # Optional for dev; in prod use Alembic migrations instead
+    Base.metadata.create_all(engine)
+
+    app.state.engine = engine
+    app.state.sessionmaker = SessionLocal
+    try:
+        yield
+    finally:
+        engine.dispose()
 
 app = FastAPI(
     title=settings.app_name,

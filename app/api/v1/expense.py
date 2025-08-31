@@ -1,18 +1,11 @@
 from fastapi import APIRouter, Depends
 from sqlalchemy import select
 from sqlalchemy.orm import Session
-from app.db.postgres import SessionLocal
+from app.deps import get_db
 from app.entities.expense import ExpenseORM
 from app.models.Expense import ExpenseCreate, ExpenseRead
 
 router = APIRouter()
-
-def get_db():
-    db = SessionLocal()
-    try:
-        yield db
-    finally:
-        db.close()
 
 @router.post("/", response_model=ExpenseRead)
 def create_expense(payload: ExpenseCreate, db: Session = Depends(get_db)):
