@@ -1,7 +1,7 @@
 from sqlalchemy import String, Integer, DateTime
 from sqlalchemy.orm import Mapped, mapped_column
 from datetime import datetime
-from app.db.base import Base
+from api.db.base import Base
 
 class ExpenseORM(Base):
     __tablename__ = "expenses"

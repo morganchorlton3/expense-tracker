@@ -1,9 +1,9 @@
 from fastapi import APIRouter, Depends
 from sqlalchemy import select
 from sqlalchemy.orm import Session
-from app.deps import get_db
-from app.entities.expense import ExpenseORM
-from app.models.Expense import ExpenseCreate, ExpenseRead
+from api.deps import get_db
+from api.entities.expense import ExpenseORM
+from api.models.Expense import ExpenseCreate, ExpenseRead
 
 router = APIRouter()
 

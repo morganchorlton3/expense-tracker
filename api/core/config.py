@@ -8,6 +8,15 @@ class Settings(BaseSettings):
     app_name: str = "Expense Tracker API"
     debug: bool = False
 
+    api_domain: str = "http://localhost:8000"
+    website_domain: str = "http://localhost:3000"
+
+    supertokens_connection_uri: str = ""
+    supertokens_api_key: str = ""
+
+    google_client_id: str = ""
+    google_client_secret: str = ""
+
     # Database
     db_user: str = "postgres"
     db_password: str = "postgres"
