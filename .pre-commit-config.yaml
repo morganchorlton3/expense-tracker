@@ -1,0 +1,26 @@
+repos:
+  - repo: local
+    hooks:
+      - id: prettier
+        name: prettier (frontend)
+        entry: bash -c 'cd frontend && pnpm run format'
+        language: system
+
+      - id: eslint
+        name: pnpm run lint:fix (frontend)
+        entry: bash -c 'cd frontend && pnpm run lint:fix'
+        language: system
+
+      - id: sort-package-json
+        name: sort-package-json (frontend/package.json)
+        entry: pnpm --dir frontend dlx sort-package-json
+        language: system
+        pass_filenames: true
+        files: ^frontend/package\.json$
+
+  - repo: https://github.com/pre-commit/pre-commit-hooks
+    rev: v4.6.0
+    hooks:
+      - id: end-of-file-fixer
+      - id: trailing-whitespace
+      - id: check-merge-conflict

@@ -1,11 +1,6 @@
 import EmailPassword from 'supertokens-auth-react/recipe/emailpassword';
 import { EmailPasswordPreBuiltUI } from 'supertokens-auth-react/recipe/emailpassword/prebuiltui';
-import ThirdParty, {
-  Google,
-  Github,
-  Apple,
-  Twitter,
-} from 'supertokens-auth-react/recipe/thirdparty';
+import ThirdParty, { Google, Github, Apple } from 'supertokens-auth-react/recipe/thirdparty';
 import { ThirdPartyPreBuiltUI } from 'supertokens-auth-react/recipe/thirdparty/prebuiltui';
 import Session from 'supertokens-auth-react/recipe/session';
 
