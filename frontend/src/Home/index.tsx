@@ -10,23 +10,15 @@ export default function Home() {
 
   return (
     <>
-      <section className="logos">
-        <img src="/ST.svg" alt="SuperTokens" />
-        <span>x</span>
-        <img src="/React.svg" alt="React" />
-      </section>
       <section className="main-container">
         <div className="inner-content">
-          <h1>
-            <strong>SuperTokens</strong> x <strong>React</strong> <br /> example project
-          </h1>
           <div>
             {session.doesSessionExist ? (
               <p>
                 You're signed in already, <br /> check out the Dashboard! 👇
               </p>
             ) : (
-              <p>Sign-in to continue</p>
+              <p>Welcome please sign-in to continue</p>
             )}
           </div>
           <nav className="buttons">
