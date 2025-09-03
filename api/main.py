@@ -1,6 +1,8 @@
 from starlette.middleware.cors import CORSMiddleware
 from supertokens_python import get_all_cors_headers
 from supertokens_python.framework.fastapi import get_middleware
+from supertokens_python.recipe.session import SessionContainer
+from supertokens_python.recipe.session.framework.fastapi import verify_session
 from supertokens_python.recipe.thirdparty import ProviderInput, ProviderConfig, ProviderClientConfig
 from supertokens_python.recipe import dashboard
 from supertokens_python import init, InputAppInfo, SupertokensConfig
@@ -8,7 +10,7 @@ from supertokens_python.recipe import emailpassword, session, thirdparty
 
 from api.api.v1 import expense
 from contextlib import asynccontextmanager
-from fastapi import FastAPI
+from fastapi import FastAPI, Depends
 from sqlalchemy.orm import sessionmaker
 from sqlmodel import create_engine
 
@@ -74,6 +76,16 @@ init(
 )
 
 app.add_middleware(get_middleware())
+async def get_session_info(s: SessionContainer = Depends(verify_session())):
+    print(s)
+    return {
+        "sessionHandle": s.get_handle(),
+        "userId": s.get_user_id(),
+        "accessTokenPayload": s.get_access_token_payload(),
+    }
+
+app.get("/sessioninfo")(get_session_info)
+app.get("/sessioninfo/")(get_session_info)
 
 app.include_router(expense.router, prefix="/api/v1/expense", tags=["accounts"])
 
